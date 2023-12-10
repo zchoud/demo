@@ -183,7 +183,7 @@ kind: Rollout
 metadata:
   name: store-front
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: store-front
@@ -215,7 +215,7 @@ spec:
     blueGreen:
       previewService: store-front-new
       activeService: store-front
-      
+
 ---
 apiVersion: v1
 kind: Service
