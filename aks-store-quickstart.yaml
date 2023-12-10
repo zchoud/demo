@@ -179,11 +179,11 @@ spec:
     app: product-service
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: Rollout
 metadata:
   name: store-front
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: store-front
@@ -212,6 +212,16 @@ spec:
           limits:
             cpu: 1000m
             memory: 512Mi
+  stratagy:
+    canary:
+      stableService: store-front
+      canaryService: store-front-canary
+      steps:
+      - setWeight: 50
+      - pause:
+        duration: "1m"
+      - setWeight: 50
+      - pause: {}
 ---
 apiVersion: v1
 kind: Service
@@ -221,6 +231,18 @@ spec:
   ports:
   - port: 80
     targetPort: 8080
+  selector:
+    app: store-front
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-front-canary
+spec:
+  ports:
+  - port: 80
+    targetPort: 8081
   selector:
     app: store-front
   type: LoadBalancer
