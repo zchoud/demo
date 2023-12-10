@@ -200,6 +200,8 @@ spec:
         ports:
         - containerPort: 8080
           name: store-front
+        - containerPort: 8081
+          name: store-front-new
         env: 
         - name: VUE_APP_ORDER_SERVICE_URL
           value: "http://order-service:3000/"
