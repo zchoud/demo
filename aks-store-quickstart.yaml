@@ -214,9 +214,9 @@ spec:
           limits:
             cpu: 1000m
             memory: 512Mi
-    blueGreen:
-      previewService: store-front-new
-      activeService: store-front
+  blueGreen:
+    previewService: store-front-new
+    activeService: store-front
 
 ---
 apiVersion: v1
