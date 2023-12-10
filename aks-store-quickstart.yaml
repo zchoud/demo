@@ -179,7 +179,7 @@ spec:
     app: product-service
 ---
 apiVersion: apps/v1
-kind: Rollout
+kind: Deployment
 metadata:
   name: store-front
 spec:
@@ -212,9 +212,9 @@ spec:
           limits:
             cpu: 1000m
             memory: 512Mi
-    blueGreen:
-      previewService: store-front-new
-      activeService: store-front
+    # blueGreen:
+    #   previewService: store-front-new
+    #   activeService: store-front
 ---
 apiVersion: v1
 kind: Service
@@ -227,15 +227,15 @@ spec:
   selector:
     app: store-front
   type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: store-front-new
-spec:
-  ports:
-  - port: 80
-    targetPort: 8081
-  selector:
-    app: store-front
-  type: LoadBalancer
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: store-front-new
+# spec:
+#   ports:
+#   - port: 80
+#     targetPort: 8081
+#   selector:
+#     app: store-front
+#   type: LoadBalancer
