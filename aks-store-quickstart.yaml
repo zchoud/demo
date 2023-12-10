@@ -212,16 +212,9 @@ spec:
           limits:
             cpu: 1000m
             memory: 512Mi
-  stratagy:
-    canary:
-      stableService: store-front
-      canaryService: store-front-canary
-      steps:
-      - setWeight: 50
-      - pause:
-        duration: "1m"
-      - setWeight: 50
-      - pause: {}
+    blueGreen:
+      previewService: store-front-new
+      activeService: store-front
 ---
 apiVersion: v1
 kind: Service
@@ -238,7 +231,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: store-front-canary
+  name: store-front-new
 spec:
   ports:
   - port: 80
